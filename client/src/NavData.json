@@ -1,0 +1,33 @@
+[
+    {
+        "auth": false,
+        "page": "Home",
+        "link": "/home"
+    },
+    {
+        "auth": false,
+        "page": "Login",
+        "link": "/login"
+    },
+    {
+        "auth": false,
+        "page": "Sign Up",
+        "link": "/sign"
+    },
+    {
+        "auth": true,
+        "page": "Members Only",
+        "link": "/pri"
+    },
+    {
+        "auth": true,
+        "page": "All Users",
+        "link": "/getAllUsers"
+    }
+    ,
+    {
+        "auth": true,
+        "page": "Log out",
+        "link": "/logout"
+    }
+]

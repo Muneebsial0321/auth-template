@@ -51,8 +51,8 @@ This authentication system is built using the MERN stack (MongoDB, Express, Reac
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/your-repo-url.git
-    cd your-repo-url
+    git clone https://github.com/muneebsial0321/auth-template
+    cd auth-template
     ```
 
 2. **Install dependencies for the client and server:**

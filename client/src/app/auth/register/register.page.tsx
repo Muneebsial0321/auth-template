@@ -14,8 +14,8 @@ export default function RegisterPage() {
 
       {/* login from */}
       <div className="flex w-[25rem] flex-col gap-3 backdrop-blur-2xl border-[#333c4d] border bg-[#00000052] p-5 rounded-3xl ">
-
-        {/* name */}
+        <h2 className="text-3xl mb-4 text-center">Sign up</h2>
+         {/* name Sign up */}
         <AuthInputField
           label="Name"
           name="name"
@@ -79,6 +79,9 @@ export default function RegisterPage() {
         <p className="text-base text-white text-center">Already have an Account?
           <Link to={"/auth/login"} className="hover:underline cursor-pointer" > login in</Link>
         </p>
+
+        <h2 className="text-base text-center font-semibold">Powered by Tech <span className="text-blue-500">Tijarat</span></h2>
+
       </div>
 
     </div>

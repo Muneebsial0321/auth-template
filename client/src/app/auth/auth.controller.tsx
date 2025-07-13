@@ -18,7 +18,7 @@ export function useAuth() {
   }
 
   const saveAccessToken = (token: string) => {
-    if (!token) throw new Error("[TOken was not provided.]")
+    if (!token) throw new Error("[Token was not provided.]")
     localStorage.setItem("access_token", token)
     showSnackbar("Authentication Successfull", "success")
     navigate("/")

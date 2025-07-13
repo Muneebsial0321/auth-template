@@ -14,6 +14,8 @@ export default function LoginPage() {
       {/* login from */}
       <div className="flex w-[25rem] flex-col gap-3 backdrop-blur-2xl border-[#333c4d] border bg-[#00000052] p-5 rounded-3xl ">
 
+      <h2 className="text-3xl mb-4 text-center">Log in</h2>
+
         {/* email */}
         <AuthInputField
           label="Email"
@@ -72,6 +74,9 @@ export default function LoginPage() {
         <p className="text-base text-white text-center">Don't have an account?
           <Link to={"/auth/register"} className="hover:underline cursor-pointer" > Sign up</Link>
         </p>
+
+        <h2 className="text-base text-center font-semibold">Powered by Tech <span className="text-blue-500">Tijarat</span></h2>
+
 
       </div>
 

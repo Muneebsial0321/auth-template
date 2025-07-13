@@ -8,6 +8,7 @@ import { User } from './decorators/user.decorators';
 import { RequestUserType } from './guards/user.type';
 import { ChangePasswordDto } from './validator/changepassword-dto';
 import { GoogleAuthDto } from './validator/googleauth-dto';
+import { VerifyOtpDto } from './validator/verify-otp-dto';
 
 
 @ApiTags('auth')
@@ -26,9 +27,14 @@ export class AuthController {
     return this.authService.registerUser(registerDto);
   }
 
-  @Post('forgot-password')
+  @Post('forget-password')
   forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
     return this.authService.forgotPassword(forgotPasswordDto.email);
+  }
+
+  @Post('verify-otp')
+  verifyOtp(@Body() verifyOtpDto: VerifyOtpDto) {
+    return this.authService.verifyResetToken(verifyOtpDto.email, verifyOtpDto.otpToken);
   }
 
   @Post('reset-password')

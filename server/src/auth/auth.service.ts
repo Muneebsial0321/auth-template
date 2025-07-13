@@ -44,7 +44,7 @@ export class AuthService {
     }
 
     async loginUser(data: { email: string; password: string }) {
-        const user = await this.prisma.user.findUnique({ where: { email: data.email } });
+        const user = await this.prisma.user.findUnique({ where: { email: data.email, provider: 'LOCAL' } });
         if (!user || !user.password) throw new UnauthorizedException('Invalid credentials');
         const valid = await bcrypt.compare(data.password, user.password);
         if (!valid) throw new UnauthorizedException('Invalid credentials');
@@ -92,6 +92,9 @@ export class AuthService {
             throw new UnauthorizedException('Invalid Google profile');
         }
         let user = await this.prisma.user.findUnique({ where: { email: payload.email } });
+        if (user && user.provider !== 'GOOGLE') {
+            throw new BadRequestException('Email already registered with another provider');
+        }
         if (!user) {
             user = await this.prisma.user.create({
                 data: {

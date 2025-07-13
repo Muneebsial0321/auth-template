@@ -22,7 +22,7 @@ export class UsersService {
         ...(query.createdAt ? { createdAt: { gte: query.createdAt } } : {}),
         ...(query.updatedAt ? { updatedAt: { gte: query.updatedAt } } : {}),
       },
-      select: { id: true, name: true, email: true, picUrl: true, createdAt: true, updatedAt: true },
+      select: { id: true, name: true, email: true, picUrl: true, createdAt: true, updatedAt: true, provider: true },
       take: Number(query.limit) || 10,
       skip: ((Number(query.page) || 1) - 1) * Number(query.limit!),
     });

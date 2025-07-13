@@ -25,10 +25,13 @@ export function useAuth() {
   }
 
   const googleLoginAuth = useGoogleLogin({
-    flow:"auth-code",
+    flow: "auth-code",
     onSuccess: async (tokenResponse) => {
-      console.log({tokenResponse});
       const data = await googleAuthentication(tokenResponse.code)
+      if (data?.response?.data?.message) {
+        showSnackbar(data.response.data.message, data.status == 400 ? "error" : "success")
+        return
+      }
       saveAccessToken(data.token)
       navigate("/")
     },

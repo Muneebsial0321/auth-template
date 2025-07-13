@@ -51,9 +51,8 @@ export class AuthController {
   }
 
   @Post('login/google')
-  loginWithGoogle(@Body() googleLoginDto: any) {
-    console.log({googleLoginDto});
-    return this.authService.loginWithGoogle(googleLoginDto.access_token);
+  loginWithGoogle(@Body() googleLoginDto: GoogleAuthDto) {
+    return this.authService.loginWithGoogle(googleLoginDto.authCode);
   }
 
 }

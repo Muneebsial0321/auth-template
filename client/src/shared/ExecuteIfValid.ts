@@ -19,12 +19,22 @@ const ExecuteIfValid = async  <T extends ZodRawShape>(
     if (result.success) {
         const data: any = await PostFunction(result.data)
         console.log({ data })
+
+        // newtwork error
+        if (data?.code === "ERR_NETWORK") {
+            return { data: "Network Error", success: false, _type: "error" }
+        }
+
+        // SS Error
         if (data?.response?.data?.message) {
             console.log(data.response.data.message)
             return { data: data.response.data.message, success: false, _type: "error" }
         }
+
+        // Send Response
         return { data, success: true, _type: "success" }
     }
+
     const errorMessages = (result.error as ZodError<any>).errors.map(
         (err) => err.message
     );

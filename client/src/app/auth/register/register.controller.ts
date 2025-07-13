@@ -6,15 +6,18 @@ import { registerUser } from "./register.service"
 
 
 export const useRegister = () => {
-    const [registerData, setRegisterData] = useState<RegisterSchemaType>({
-      name: "",
-      email: "",
-      password: ""
-    })
+  const [registerData, setRegisterData] = useState<RegisterSchemaType>({
+    name: "",
+    email: "",
+    password: ""
+  })
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+
   const { handleSubmit } = useHandleSubmitProxy()
   const { saveAccessToken } = useAuth()
 
   const onSubmit = async (payload: RegisterSchemaType) => {
+    setIsSubmitting(() => true)
     const { data } = await handleSubmit(
       payload,
       registerSchema,
@@ -22,8 +25,9 @@ export const useRegister = () => {
       "Registered",
       "success"
     )
+    setIsSubmitting(() => false)
     saveAccessToken(data.token)
-    
+
   }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,5 +35,5 @@ export const useRegister = () => {
     setRegisterData((prev) => ({ ...prev, [name]: value }))
   }
 
-  return { onSubmit, registerData ,setRegisterData, onChange}
+  return { onSubmit, registerData, setRegisterData, onChange, isSubmitting }
 }

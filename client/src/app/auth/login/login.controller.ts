@@ -10,10 +10,12 @@ export const useLogin = () => {
     email: "",
     password: ""
   })
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const { saveAccessToken } = useAuth()
   const { handleSubmit } = useHandleSubmitProxy()
 
   const onSubmit = async (payload: LoginSchemaType) => {
+    setIsSubmitting(() => true)
     const { data } = await handleSubmit(
       payload,
       loginSchema,
@@ -21,6 +23,7 @@ export const useLogin = () => {
       "Logged in",
       "success"
     )
+    setIsSubmitting(() => false)
     saveAccessToken(data.token)
   }
 
@@ -29,6 +32,6 @@ export const useLogin = () => {
     setLoginData((prev) => ({ ...prev, [name]: value }))
   }
 
-  return { onSubmit, loginData ,setLoginData, onChange}
+  return { onSubmit, loginData ,setLoginData, onChange, isSubmitting}
 }
 

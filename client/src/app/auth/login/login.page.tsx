@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../auth.controller";
 import { useLogin } from "./login.controller";
 import { AuthInputField } from "../auth.page";
+import { Refresh } from "@mui/icons-material";
 
 export default function LoginPage() {
   const { googleLoginAuth } = useAuth()
-  const { loginData, onChange, onSubmit } = useLogin()
+  const { loginData, onChange, onSubmit, isSubmitting } = useLogin()
   return (
     <div className="flex flex-col bg-[radial-gradient(ellipse_at_center,#03172d_15%,#080e16_90%)] justify-center items-center h-[100vh]">
 
@@ -41,10 +42,11 @@ export default function LoginPage() {
 
         {/* button */}
         <Button
-          onClick={() => onSubmit(loginData)}
+          // disabled={isSubmitting}
+          onClick={() => !isSubmitting && onSubmit(loginData)}
           variant="contained"
           className="rounded-xl py-2 mt-2 bg-[#113c6b]"
-        >Submit</Button>
+        >Submit {isSubmitting && <Refresh className="animate-spin"/> }</Button>
 
         {/* or */}
         <div className="flex items-center gap-2">

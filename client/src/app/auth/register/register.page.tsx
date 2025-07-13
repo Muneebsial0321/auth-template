@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../auth.controller";
 import { AuthInputField } from "../auth.page";
 import { useRegister } from "./register.controller";
+import { Refresh } from "@mui/icons-material"
 
 export default function RegisterPage() {
-  const { registerData, onChange, onSubmit } = useRegister()
+  const { registerData, onChange, onSubmit, isSubmitting } = useRegister()
   const { googleLoginAuth } = useAuth()
 
   return (
@@ -51,10 +52,10 @@ export default function RegisterPage() {
 
         {/* button */}
         <Button
-          onClick={() => onSubmit(registerData)}
+          onClick={() => !isSubmitting && onSubmit(registerData)}
           variant="contained"
           className="rounded-xl py-2 mt-2 bg-[#113c6b]"
-        >Submit</Button>
+        >Submit {isSubmitting && <Refresh className="animate-spin"/> } </Button>
 
         {/* or */}
         <div className="flex items-center gap-2">

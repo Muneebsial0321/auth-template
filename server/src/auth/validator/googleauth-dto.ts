@@ -6,6 +6,6 @@ export class GoogleAuthDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    access_token: string;
+    authCode: string;
 
 }

@@ -20,7 +20,7 @@ export class AuthService {
     private readonly googleClient = new OAuth2Client({
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        redirectUri: "postmessage" ,
+        redirectUri: "postmessage",
     })
     constructor(
         private readonly prisma: DbService,
@@ -58,12 +58,30 @@ export class AuthService {
     }
 
     async forgotPassword(email: string) {
-        const user = await this.prisma.user.findUnique({ where: { email } });
-        if (!user) return;
+        const user = await this.prisma.user.findUnique({ where: { email, provider: 'LOCAL' } });
+        if (!user) throw new BadRequestException('Email not registered');
         const token = Math.random().toString(36).substring(2, 15); // Use a secure token in production
-        await this.prisma.user.update({ where: { email }, data: { password: token } });
+        await this.prisma.user.update({ where: { email }, data: { otpToken: token } });
         await sendMail(email, 'Reset Password', `Your reset token: ${token}`);
+        console.log(`Your reset token: ${token}`)
+        return { message: 'Reset token sent to email' };
+        // duv5t15reio
     }
+
+    async verifyResetToken(email: string, token: string) {
+        const user = await this.prisma.user.findUnique({ where: { email } });
+        if (!user || user.otpToken !== token) throw new BadRequestException('Invalid token');
+        if (user.provider !== 'LOCAL') throw new BadRequestException('Cannot reset password for non-local users');
+        if (!(user.otpToken === token)) throw new BadRequestException('Token Invalid');
+        const newToken = this.jwtService.sign({
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role || 'USER',
+        });
+        return { user, token: newToken };
+    }
+    
 
     async resetPassword(email: string, token: string, newPassword: string) {
         const user = await this.prisma.user.findUnique({ where: { email } });
